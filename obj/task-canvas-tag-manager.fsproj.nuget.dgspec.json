@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/kame/kame/task-canvas-tag-manager/task-canvas-tag-manager.fsproj": {}
+  },
+  "projects": {
+    "/Users/kame/kame/task-canvas-tag-manager/task-canvas-tag-manager.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kame/kame/task-canvas-tag-manager/task-canvas-tag-manager.fsproj",
+        "projectName": "task-canvas-tag-manager",
+        "projectPath": "/Users/kame/kame/task-canvas-tag-manager/task-canvas-tag-manager.fsproj",
+        "packagesPath": "/Users/kame/.nuget/packages/",
+        "outputPath": "/Users/kame/kame/task-canvas-tag-manager/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kame/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/Users/kame/.asdf/installs/dotnet/8.0.401/sdk/8.0.401/FSharp/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[8.0.400, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/kame/.asdf/installs/dotnet/8.0.401/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

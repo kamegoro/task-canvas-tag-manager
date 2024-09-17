@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "wmwA/UqeA2w=",
+  "success": true,
+  "projectFilePath": "/Users/kame/kame/task-canvas-tag-manager/task-canvas-tag-manager.fsproj",
+  "expectedPackageFiles": [
+    "/Users/kame/.nuget/packages/fsharp.core/8.0.400/fsharp.core.8.0.400.nupkg.sha512"
+  ],
+  "logs": []
+}
