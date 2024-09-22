@@ -15,9 +15,11 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Controllers.Systems
+open Controllers.TaskCanvas
 
 module Program =
     open Microsoft.AspNetCore.Http
+    open Controllers.TaskCanvas
     let exitCode = 0
 
     [<EntryPoint>]
@@ -35,6 +37,8 @@ module Program =
         app.MapControllers()
 
         app.MapGet("/v1/systems/ping", Func<IResult> ping)
+
+        app.MapGet("/v1/tags", Func<IResult> GetTags.controller)
 
         app.Run()
 
