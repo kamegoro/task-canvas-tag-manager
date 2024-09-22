@@ -6,7 +6,7 @@ lib/release
 Debug
 *.suo
 *.user
-obj
+obj/
 bin
 /build/
 *.exe

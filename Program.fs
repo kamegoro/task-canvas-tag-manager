@@ -1,4 +1,5 @@
 namespace task_canvas_tag_manager
+
 #nowarn "20"
 open System
 open System.Collections.Generic
@@ -13,8 +14,10 @@ open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
+open Controllers.Systems
 
 module Program =
+    open Microsoft.AspNetCore.Http
     let exitCode = 0
 
     [<EntryPoint>]
@@ -30,6 +33,8 @@ module Program =
 
         app.UseAuthorization()
         app.MapControllers()
+
+        app.MapGet("/v1/systems/ping", Func<IResult> ping)
 
         app.Run()
 
