@@ -4,6 +4,8 @@
     <RootNamespace>task_canvas_tag_manager</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Domain/Tag.fs" />
+    <Compile Include="UseCase/GetTags.fs" />
     <Compile Include="Config.fs" />
     <Compile Include="WeatherForecast.fs" />
     <Compile Include="Controllers/**/*.fs" />
