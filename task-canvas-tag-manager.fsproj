@@ -4,11 +4,18 @@
     <RootNamespace>task_canvas_tag_manager</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Domain/Tag.fs" />
-    <Compile Include="UseCase/GetTags.fs" />
     <Compile Include="Config.fs" />
+    <Compile Include="Domain/Tag.fs" />
+    <Compile Include="Port/*.fs" />
+    <Compile Include="Driver/*.fs" />
+    <Compile Include="Gateway/*.fs" />
+    <Compile Include="UseCase/GetTags.fs" />
     <Compile Include="WeatherForecast.fs" />
     <Compile Include="Controllers/**/*.fs" />
     <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper.FSharp" Version="4.9.0" />
+    <PackageReference Include="FsConfig" Version="4.1.0" />
   </ItemGroup>
 </Project>
