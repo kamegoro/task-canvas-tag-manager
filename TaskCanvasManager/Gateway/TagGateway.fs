@@ -12,7 +12,10 @@ module TagGateway =
                 let! データベースのタグ一覧 = TaskCanvasDb.selectTags conn
 
                 let タグ一覧 =
-                    データベースのタグ一覧 |> List.map (fun タグ -> { タグ番号 = タグ番号 (タグ.id.ToString()); 名前 = タグ名 タグ.name })
+                    データベースのタグ一覧
+                    |> List.map (fun タグ ->
+                        { タグ番号 = タグ番号 (タグ.id.ToString())
+                          名前 = タグ名 タグ.name })
 
                 return タグ一覧
             }

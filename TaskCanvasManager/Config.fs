@@ -12,6 +12,6 @@ type TaskCanvasDbConfig =
       [<DefaultValue("task_canvas")>]
       Database: string
       [<DefaultValue("root")>]
-      Password: string}
+      Password: string }
 
 type Config = { TaskCanvasDb: TaskCanvasDbConfig }

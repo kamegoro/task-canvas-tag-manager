@@ -34,32 +34,29 @@ let main args =
 
     let builder = WebApplication.CreateBuilder(args)
 
-    builder.Services.AddControllers()
-    |> ignore
+    builder.Services.AddControllers() |> ignore
 
     let app = builder.Build()
 
     let taskCanvasDbDataSource = createTaskCanvasDbConnPool ()
 
-    app.UseHttpsRedirection()
-    |> ignore
+    app.UseHttpsRedirection() |> ignore
 
-    app.UseAuthorization()
-    |> ignore
+    app.UseAuthorization() |> ignore
 
-    app.MapControllers()
-    |> ignore
+    app.MapControllers() |> ignore
 
-    app.MapGet("/v1/systems/ping", Func<IResult> ping)
-    |> ignore
+    app.MapGet("/v1/systems/ping", Func<IResult> ping) |> ignore
 
-    app.MapGet("/v1/tags", Func<IResult>(fun _ ->
-        let deps: 全てのタグの取得.Deps =
-            { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection())}
+    app.MapGet(
+        "/v1/tags",
+        Func<IResult>(fun _ ->
+            let deps: 全てのタグの取得.Deps =
+                { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection()) }
 
-        let getTags = GetTags.controller deps
+            let getTags = GetTags.controller deps
 
-        getTags |> Async.RunSynchronously)
+            getTags |> Async.RunSynchronously)
     )
     |> ignore
 

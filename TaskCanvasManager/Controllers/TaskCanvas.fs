@@ -13,10 +13,8 @@ module GetTags =
     let toJson (tags: タグ list) =
         tags
         |> List.map (fun tag ->
-          { id = tag.タグ番号 |> fun (タグ番号 v) -> v;
-            name = tag.名前 |> fun (タグ名 v) -> v })
+            { id = tag.タグ番号 |> fun (タグ番号 v) -> v
+              name = tag.名前 |> fun (タグ名 v) -> v })
 
     let controller (deps: 全てのタグの取得.Deps) : Async<IResult> =
-          全てのタグの取得.実行 deps
-          |> Async.map toJson
-          |> Async.map (fun json -> Results.Ok json)
+        全てのタグの取得.実行 deps |> Async.map toJson |> Async.map (fun json -> Results.Ok json)
