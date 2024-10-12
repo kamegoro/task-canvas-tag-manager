@@ -9,7 +9,9 @@ type TaskCanvasDbConfig =
       Port: int
       [<DefaultValue("developer")>]
       Username: string
-      [<DefaultValue("task-canvas")>]
-      Database: string }
+      [<DefaultValue("task_canvas")>]
+      Database: string
+      [<DefaultValue("root")>]
+      Password: string}
 
 type Config = { TaskCanvasDb: TaskCanvasDbConfig }
