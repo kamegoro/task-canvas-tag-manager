@@ -17,5 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper.FSharp" Version="4.9.0" />
     <PackageReference Include="FsConfig" Version="4.1.0" />
+    <PackageReference Include="FSharpPlus" Version="1.6.1" />
+    <PackageReference Include="Npgsql.FSharp" Version="5.7.0" />
   </ItemGroup>
 </Project>
