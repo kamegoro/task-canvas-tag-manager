@@ -1,7 +1,16 @@
-module task_canvas_tag_manager.Config
+namespace task_canvas_tag_manager.Config
 
-type TaskCanvasApi = {
-  Endpoint: string
-}
+open FsConfig
 
-let defaultTaskCanvasApi = { Endpoint = "http://localhost:8080" }
+type TaskCanvasDbConfig =
+    { [<DefaultValue("localhost")>]
+      Host: string
+      [<DefaultValue("5432")>]
+      Port: int
+      [<DefaultValue("developer")>]
+      Username: string
+      [<DefaultValue("task-canvas")>]
+      Database: string}
+
+type Config =
+    { TaskCanvasDb: TaskCanvasDbConfig }
