@@ -1,6 +1,7 @@
 namespace task_canvas_tag_manager
 
 #nowarn "20"
+
 open System
 open System.Collections.Generic
 open System.IO
@@ -20,6 +21,7 @@ open Controllers.TaskCanvas
 module Program =
     open Microsoft.AspNetCore.Http
     open Controllers.TaskCanvas
+
     let exitCode = 0
 
     [<EntryPoint>]

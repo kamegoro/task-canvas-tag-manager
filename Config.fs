@@ -10,7 +10,6 @@ type TaskCanvasDbConfig =
       [<DefaultValue("developer")>]
       Username: string
       [<DefaultValue("task-canvas")>]
-      Database: string}
+      Database: string }
 
-type Config =
-    { TaskCanvasDb: TaskCanvasDbConfig }
+type Config = { TaskCanvasDb: TaskCanvasDbConfig }

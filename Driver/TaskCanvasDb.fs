@@ -4,7 +4,7 @@ open Dapper.FSharp.PostgreSQL
 open System.Data
 
 module TaskCanvasDb =
-    type Tag = { id: string; name: string; }
+    type Tag = { id: string; name: string }
 
     let tagTable = table'<Tag> "tag" |> inSchema "task_canvas"
 
@@ -13,7 +13,7 @@ module TaskCanvasDb =
             let! queryResult =
                 select {
                     for t in tagTable do
-                    selectAll
+                        selectAll
                 }
                 |> conn.SelectAsync<Tag>
                 |> Async.AwaitTask

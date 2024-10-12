@@ -8,10 +8,11 @@ open System.Data
 module TagGateway =
     let 全てのタグの取得 (conn: IDbConnection) : 全てのタグの取得 =
         fun () ->
-          async {
-              let! データベースのタグ一覧 = TaskCanvasDb.selectTags conn
+            async {
+                let! データベースのタグ一覧 = TaskCanvasDb.selectTags conn
 
-              let タグ一覧 = データベースのタグ一覧 |> List.map (fun タグ -> { タグ番号 = タグ番号 タグ.id; 名前 = タグ名 タグ.name } )
+                let タグ一覧 =
+                    データベースのタグ一覧 |> List.map (fun タグ -> { タグ番号 = タグ番号 タグ.id; 名前 = タグ名 タグ.name })
 
-              return タグ一覧
-          }
+                return タグ一覧
+            }
