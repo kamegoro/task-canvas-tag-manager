@@ -1,4 +1,4 @@
-module task_canvas_tag_manager.UseCase.GetTags
+module task_canvas_tag_manager.UseCase
 
 open task_canvas_tag_manager.Port
 open task_canvas_tag_manager.Domain

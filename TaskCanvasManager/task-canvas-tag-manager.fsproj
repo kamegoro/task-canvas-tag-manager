@@ -9,7 +9,7 @@
     <Compile Include="Port/*.fs" />
     <Compile Include="Driver/*.fs" />
     <Compile Include="Gateway/*.fs" />
-    <Compile Include="UseCase/GetTags.fs" />
+    <Compile Include="UseCase/*.fs" />
     <Compile Include="WeatherForecast.fs" />
     <Compile Include="Controllers/**/*.fs" />
     <Compile Include="Program.fs" />
