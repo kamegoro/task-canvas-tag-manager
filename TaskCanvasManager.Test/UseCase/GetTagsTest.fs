@@ -2,7 +2,6 @@ namespace task_canvas_tag_manager.UseCase
 
 open FsUnit
 open NUnit.Framework
-
 open task_canvas_tag_manager.Domain
 
 module 全てのタグの取得のテスト =
