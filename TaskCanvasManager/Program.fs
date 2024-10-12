@@ -1,47 +1,68 @@
-namespace task_canvas_tag_manager
-
-#nowarn "20"
-
 open System
-open System.Collections.Generic
-open System.IO
-open System.Linq
-open System.Threading.Tasks
-open Microsoft.AspNetCore
+open Npgsql
 open Microsoft.AspNetCore.Builder
-open Microsoft.AspNetCore.Hosting
-open Microsoft.AspNetCore.HttpsPolicy
-open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
-open Microsoft.Extensions.Hosting
-open Microsoft.Extensions.Logging
 open Controllers.Systems
-open Controllers.TaskCanvas
+open task_canvas_tag_manager.Controller
+open task_canvas_tag_manager.Config
+open task_canvas_tag_manager.UseCase
+open task_canvas_tag_manager.Gateway
+open Microsoft.AspNetCore.Http
+open System.Threading.Tasks
 
-module Program =
-    open Microsoft.AspNetCore.Http
-    open Controllers.TaskCanvas
+let config =
+    match FsConfig.EnvConfig.Get<Config>() with
+    | Ok config -> config
+    | Error e -> failwithf "Failed to load config: %A" e
 
-    let exitCode = 0
+let createTaskCanvasDbConnPool () =
+    let builder =
+        new NpgsqlConnectionStringBuilder(
+            Host = config.TaskCanvasDb.Host,
+            Port = config.TaskCanvasDb.Port,
+            Username = config.TaskCanvasDb.Username,
+            Database = config.TaskCanvasDb.Database,
+            Password = config.TaskCanvasDb.Password
+        )
 
-    [<EntryPoint>]
-    let main args =
+    NpgsqlDataSource.Create(builder.ConnectionString)
 
-        let builder = WebApplication.CreateBuilder(args)
 
-        builder.Services.AddControllers()
 
-        let app = builder.Build()
+[<EntryPoint>]
+let main args =
 
-        app.UseHttpsRedirection()
+    let builder = WebApplication.CreateBuilder(args)
 
-        app.UseAuthorization()
-        app.MapControllers()
+    builder.Services.AddControllers()
+    |> ignore
 
-        app.MapGet("/v1/systems/ping", Func<IResult> ping)
+    let app = builder.Build()
 
-        app.MapGet("/v1/tags", Func<IResult> GetTags.controller)
+    let taskCanvasDbDataSource = createTaskCanvasDbConnPool ()
 
-        app.Run("http://localhost:9090")
+    app.UseHttpsRedirection()
+    |> ignore
 
-        exitCode
+    app.UseAuthorization()
+    |> ignore
+
+    app.MapControllers()
+    |> ignore
+
+    app.MapGet("/v1/systems/ping", Func<IResult> ping)
+    |> ignore
+
+    app.MapGet("/v1/tags", Func<IResult>(fun _ ->
+        let deps: 全てのタグの取得.Deps =
+            { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection())}
+
+        let getTags = GetTags.controller deps
+
+        getTags |> Async.RunSynchronously)
+    )
+    |> ignore
+
+    app.Run("http://localhost:9090")
+
+    0
