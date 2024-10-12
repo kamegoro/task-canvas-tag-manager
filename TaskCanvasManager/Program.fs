@@ -42,6 +42,6 @@ module Program =
 
         app.MapGet("/v1/tags", Func<IResult> GetTags.controller)
 
-        app.Run()
+        app.Run("http://localhost:9090")
 
         exitCode
