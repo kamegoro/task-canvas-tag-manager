@@ -1,16 +1,22 @@
-module Controllers.TaskCanvas
+namespace task_canvas_tag_manager.Controller
+
+open FSharpPlus
 
 open Microsoft.AspNetCore.Http
+open task_canvas_tag_manager.UseCase
+open task_canvas_tag_manager.Domain
 
 module GetTags =
     type Tag = { id: string; name: string }
     type ResponseJson = { tags: Tag list }
 
-    let controller () : IResult =
-        let tags =
-            [ { id = "3B893F5A-E9DC-4CF9-AC23-599AD2BD7FD4"
-                name = "Tag1" }
-              { id = "907B39A8-4DAA-4E8B-930E-D6F87A935003"
-                name = "Tag2" } ]
+    let toJson (tags: タグ list) =
+        tags
+        |> List.map (fun tag ->
+          { id = tag.タグ番号 |> fun (タグ番号 v) -> v;
+            name = tag.名前 |> fun (タグ名 v) -> v })
 
-        Results.Ok { tags = tags }
+    let controller (deps: 全てのタグの取得.Deps) : Async<IResult> =
+          全てのタグの取得.実行 deps
+          |> Async.map toJson
+          |> Async.map (fun json -> Results.Ok json)
