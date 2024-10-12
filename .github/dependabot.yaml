@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/TaskCanvasManager"
+    schedule:
+      interval: "daily"
+      time: "02:00"
+  - package-ecosystem: "nuget"
+    directory: "/TaskCanvasManager.Test"
+    schedule:
+      interval: "daily"
+      time: "02:00"
