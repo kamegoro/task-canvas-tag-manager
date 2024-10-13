@@ -21,3 +21,15 @@ module TaskCanvasDb =
 
             return queryResult |> List.ofSeq
         }
+
+    let insertTag (conn: IDbConnection) (タグ: Tag) : Async<unit> =
+        async {
+            return!
+                insert {
+                    into tagTable
+                    value タグ
+                }
+                |> conn.InsertAsync
+                |> Async.AwaitTask
+                |> Async.Ignore
+        }
