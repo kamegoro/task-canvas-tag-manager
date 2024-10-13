@@ -10,4 +10,5 @@ type タグ = { タグ番号: タグ番号; 名前: タグ名 }
 
 module タグ =
     let タグの作成 (名前: タグ名) : タグ =
-        { タグ番号 = タグ番号 (Guid.NewGuid().ToString()); 名前 = 名前 }
+        { タグ番号 = タグ番号 (Guid.NewGuid().ToString())
+          名前 = 名前 }

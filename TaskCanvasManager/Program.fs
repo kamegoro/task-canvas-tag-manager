@@ -64,11 +64,10 @@ let main args =
         Func<CreateTag.TagRequestJson, IResult>(fun req ->
             let deps: タグの登録.Deps =
                 { タグの登録 = TagGateway.タグの登録 (taskCanvasDbDataSource.CreateConnection()) }
-            
+
             let registerTag = CreateTag.controller deps req.name
 
-            registerTag |> Async.RunSynchronously
-        )
+            registerTag |> Async.RunSynchronously)
     )
     |> ignore
 
