@@ -3,7 +3,7 @@ open Npgsql
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection
 open Controllers.Systems
-open task_canvas_tag_manager.Controller
+open task_canvas_tag_manager.Handler
 open task_canvas_tag_manager.Config
 open task_canvas_tag_manager.UseCase
 open task_canvas_tag_manager.Gateway
@@ -53,7 +53,7 @@ let main args =
             let deps: 全てのタグの取得.Deps =
                 { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection()) }
 
-            let getTags = GetTags.controller deps
+            let getTags = GetTags.handler deps
 
             getTags |> Async.RunSynchronously)
     )
@@ -65,7 +65,7 @@ let main args =
             let deps: タグの登録.Deps =
                 { タグの登録 = TagGateway.タグの登録 (taskCanvasDbDataSource.CreateConnection()) }
 
-            let registerTag = CreateTag.controller deps req.name
+            let registerTag = CreateTag.handler deps req.name
 
             registerTag |> Async.RunSynchronously)
     )

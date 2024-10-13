@@ -1,4 +1,4 @@
-namespace task_canvas_tag_manager.Controller
+namespace task_canvas_tag_manager.Handler
 
 open FSharpPlus
 
@@ -16,5 +16,5 @@ module GetTags =
             { id = tag.タグ番号 |> fun (タグ番号 v) -> v.ToString()
               name = tag.名前 |> fun (タグ名 v) -> v })
 
-    let controller (deps: 全てのタグの取得.Deps) : Async<IResult> =
+    let handler (deps: 全てのタグの取得.Deps) : Async<IResult> =
         全てのタグの取得.実行 deps |> Async.map toJson |> Async.map (fun json -> Results.Ok json)
