@@ -22,7 +22,7 @@ module TagGateway =
         fun (タグ: タグ) ->
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
-                    { id = Guid.Parse(タグ.タグ番号 |> fun (タグ番号 v) -> v.ToString())
+                    { id = タグ.タグ番号 |> fun (タグ番号 v) -> v;
                       name = タグ.名前 |> fun (タグ名 v) -> v }
 
                 return! TaskCanvasDb.insertTag conn データベースのタグ
