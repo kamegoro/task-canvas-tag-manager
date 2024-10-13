@@ -8,7 +8,6 @@ open task_canvas_tag_manager.Config
 open task_canvas_tag_manager.UseCase
 open task_canvas_tag_manager.Gateway
 open Microsoft.AspNetCore.Http
-open System.Threading.Tasks
 
 let config =
     match FsConfig.EnvConfig.Get<Config>() with
@@ -57,6 +56,19 @@ let main args =
             let getTags = GetTags.controller deps
 
             getTags |> Async.RunSynchronously)
+    )
+    |> ignore
+
+    app.MapPost(
+        "/v1/tags",
+        Func<CreateTag.TagRequestJson, IResult>(fun req ->
+            let deps: タグの登録.Deps =
+                { タグの登録 = TagGateway.タグの登録 (taskCanvasDbDataSource.CreateConnection()) }
+            
+            let registerTag = CreateTag.controller deps req.name
+
+            registerTag |> Async.RunSynchronously
+        )
     )
     |> ignore
 
