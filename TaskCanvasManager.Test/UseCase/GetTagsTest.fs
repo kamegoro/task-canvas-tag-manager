@@ -1,5 +1,7 @@
 namespace task_canvas_tag_manager.UseCase
 
+open System
+
 open FsUnit
 open NUnit.Framework
 open task_canvas_tag_manager.Domain
@@ -8,7 +10,10 @@ module 全てのタグの取得のテスト =
     [<Test>]
     let 全てのタグの取得 () =
         let タグ一覧 =
-            [ { タグ番号 = タグ番号 "1"; 名前 = タグ名 "タグ1" }; { タグ番号 = タグ番号 "2"; 名前 = タグ名 "タグ2" } ]
+            [ { タグ番号 = タグ番号 (Guid.NewGuid())
+                名前 = タグ名 "タグ1" }
+              { タグ番号 = タグ番号 (Guid.NewGuid())
+                名前 = タグ名 "タグ2" } ]
 
         let mutable 全てのタグの取得called = 0
 

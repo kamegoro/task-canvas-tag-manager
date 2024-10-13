@@ -13,10 +13,7 @@ module TagGateway =
                 let! データベースのタグ一覧 = TaskCanvasDb.selectTags conn
 
                 let タグ一覧 =
-                    データベースのタグ一覧
-                    |> List.map (fun タグ ->
-                        { タグ番号 = タグ番号 (タグ.id.ToString())
-                          名前 = タグ名 タグ.name })
+                    データベースのタグ一覧 |> List.map (fun タグ -> { タグ番号 = タグ番号 タグ.id; 名前 = タグ名 タグ.name })
 
                 return タグ一覧
             }
@@ -25,7 +22,7 @@ module TagGateway =
         fun (タグ: タグ) ->
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
-                    { id = Guid.Parse(タグ.タグ番号 |> fun (タグ番号 v) -> v)
+                    { id = Guid.Parse(タグ.タグ番号 |> fun (タグ番号 v) -> v.ToString())
                       name = タグ.名前 |> fun (タグ名 v) -> v }
 
                 return! TaskCanvasDb.insertTag conn データベースのタグ
