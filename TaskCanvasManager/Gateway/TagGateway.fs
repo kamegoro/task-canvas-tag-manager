@@ -4,6 +4,7 @@ open task_canvas_tag_manager.Driver
 open task_canvas_tag_manager.Domain
 open task_canvas_tag_manager.Port
 open System.Data
+open System
 
 module TagGateway =
     let 全てのタグの取得 (conn: IDbConnection) : 全てのタグの取得 =
@@ -35,4 +36,12 @@ module TagGateway =
                       name = タグ.名前 |> fun (タグ名 v) -> v }
 
                 return! TaskCanvasDb.updateTag conn データベースのタグ
+            }
+
+    let タグの削除 (conn: IDbConnection) : タグの削除 =
+        fun (タグ番号': タグ番号) ->
+            async {
+                let データベースのタグ番号: Guid = タグ番号' |> fun (タグ番号 v) -> v
+
+                return! TaskCanvasDb.deleteTag conn データベースのタグ番号
             }
