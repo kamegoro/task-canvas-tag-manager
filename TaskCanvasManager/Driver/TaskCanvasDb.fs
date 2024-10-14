@@ -33,3 +33,16 @@ module TaskCanvasDb =
                 |> Async.AwaitTask
                 |> Async.Ignore
         }
+
+    let updateTag (conn: IDbConnection) (タグ: Tag) : Async<unit> =
+        async {
+            return!
+                update {
+                    for t in tagTable do
+                    set { id = タグ.id; name = タグ.name }
+                    where (t.id = タグ.id)
+                }
+                |> conn.UpdateAsync
+                |> Async.AwaitTask
+                |> Async.Ignore
+        }
