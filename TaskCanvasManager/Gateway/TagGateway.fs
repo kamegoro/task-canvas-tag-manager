@@ -45,3 +45,21 @@ module TagGateway =
 
                 return! TaskCanvasDb.deleteTag conn データベースのタグ番号
             }
+
+    let タグの検索 (conn: IDbConnection) : タグの検索 =
+        fun (タグ名': タグ名) ->
+            async {
+                let データベースのタグの変換 (タグ: TaskCanvasDb.Tag) =
+                    { タグ番号 = タグ.id |> fun v -> タグ番号 v
+                      名前 = タグ.name |> fun v -> タグ名 v }
+
+                let! データベースのタグの検索結果 = TaskCanvasDb.searchTags conn (タグ名' |> fun (タグ名 v) -> v)
+
+                match データベースのタグの検索結果 with
+                | Ok タグリスト ->
+                    let タグ一覧 = タグリスト |> List.map データベースのタグの変換
+                    return タグ一覧
+                | Error ex ->
+                    // Handle the error case appropriately
+                    return raise ex
+            }
