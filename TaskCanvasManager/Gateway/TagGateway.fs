@@ -21,7 +21,7 @@ module TagGateway =
         fun (タグ: タグ) ->
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
-                    { id = タグ.タグ番号 |> fun (タグ番号 v) -> v;
+                    { id = タグ.タグ番号 |> fun (タグ番号 v) -> v
                       name = タグ.名前 |> fun (タグ名 v) -> v }
 
                 return! TaskCanvasDb.insertTag conn データベースのタグ
@@ -31,7 +31,7 @@ module TagGateway =
         fun (タグ: タグ) ->
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
-                    { id = タグ.タグ番号 |> fun (タグ番号 v) -> v;
+                    { id = タグ.タグ番号 |> fun (タグ番号 v) -> v
                       name = タグ.名前 |> fun (タグ名 v) -> v }
 
                 return! TaskCanvasDb.updateTag conn データベースのタグ

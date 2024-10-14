@@ -39,8 +39,8 @@ module TaskCanvasDb =
             return!
                 update {
                     for t in tagTable do
-                    set { id = タグ.id; name = タグ.name }
-                    where (t.id = タグ.id)
+                        set { id = タグ.id; name = タグ.name }
+                        where (t.id = タグ.id)
                 }
                 |> conn.UpdateAsync
                 |> Async.AwaitTask
