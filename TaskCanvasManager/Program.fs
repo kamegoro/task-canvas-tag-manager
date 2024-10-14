@@ -9,6 +9,7 @@ open task_canvas_tag_manager.UseCase
 open task_canvas_tag_manager.Gateway
 open Microsoft.AspNetCore.Http
 open System.Threading.Tasks
+open System.Text.RegularExpressions
 
 let config =
     match FsConfig.EnvConfig.Get<Config>() with
@@ -27,36 +28,63 @@ let createTaskCanvasDbConnPool () =
 
     NpgsqlDataSource.Create(builder.ConnectionString)
 
-
+let isJapanese (input: string) : bool =
+    Regex.IsMatch(input, @"\p{IsHiragana}|\p{IsKatakana}|\p{IsCJKUnifiedIdeographs}")
 
 [<EntryPoint>]
 let main args =
 
     let builder = WebApplication.CreateBuilder(args)
 
-    builder.Services.AddControllers() |> ignore
+    let taskCanvasDbDataSource = createTaskCanvasDbConnPool ()
 
     let app = builder.Build()
 
-    let taskCanvasDbDataSource = createTaskCanvasDbConnPool ()
-
-    app.UseHttpsRedirection() |> ignore
-
-    app.UseAuthorization() |> ignore
-
-    app.MapControllers() |> ignore
-
     app.MapGet("/v1/systems/ping", Func<IResult> ping) |> ignore
+
+    let isJapanese (input: string) =
+        let regex = new Regex(@"\p{IsCJKUnifiedIdeographs}")
+        regex.IsMatch(input)
 
     app.MapGet(
         "/v1/tags",
-        Func<Task<IResult>>(fun _ ->
-            let deps: 全てのタグの取得.Deps =
-                { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection()) }
+        Func<HttpContext, Task<IResult>>(fun ctx ->
+            async {
+                try
+                    let queryParams = ctx.Request.Query
 
-            let getTags = GetTags.handler deps
+                    let nameOption =
+                        if queryParams.ContainsKey("name") then
+                            let name = queryParams.["name"].ToString()
 
-            getTags |> Async.StartAsTask)
+                            if not (String.IsNullOrWhiteSpace(name)) then
+                                Some(name)
+                            else
+                                None
+                        else
+                            None
+
+                    let getDeps: 全てのタグの取得.Deps =
+                        { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection()) }
+
+                    let searchDeps: タグの検索.Deps =
+                        { タグの検索 = TagGateway.タグの検索 (taskCanvasDbDataSource.CreateConnection()) }
+
+                    let searchTags =
+                        match nameOption with
+                        | Some n when isJapanese n -> SearchTags.handler searchDeps n
+                        | Some n -> SearchTags.handler searchDeps n
+                        | None ->
+
+                            GetTags.handler getDeps
+
+                    let! result = searchTags
+
+                    return result
+                with ex ->
+                    return Results.Problem("An error occurred while processing the request.")
+            }
+            |> Async.StartAsTask)
     )
     |> ignore
 
@@ -95,6 +123,7 @@ let main args =
             deleteTag |> Async.StartAsTask)
     )
     |> ignore
+
 
     app.Run("http://localhost:9090")
 
