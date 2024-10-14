@@ -84,6 +84,18 @@ let main args =
     )
     |> ignore
 
+    app.MapDelete(
+        "/v1/tags/{id}",
+        Func<string, Task<IResult>>(fun id ->
+            let deps: タグの削除.Deps =
+                { タグの削除 = TagGateway.タグの削除 (taskCanvasDbDataSource.CreateConnection()) }
+
+            let deleteTag = DeleteTag.handler deps (Guid.Parse(id))
+
+            deleteTag |> Async.StartAsTask)
+    )
+    |> ignore
+
     app.Run("http://localhost:9090")
 
     0
