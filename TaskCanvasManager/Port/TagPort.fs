@@ -9,3 +9,5 @@ type タグの登録 = タグ -> Async<unit>
 type タグの更新 = タグ -> Async<unit>
 
 type タグの削除 = タグ番号 -> Async<unit>
+
+type タグの検索 = タグ名 -> Async<タグ list>
