@@ -46,3 +46,15 @@ module TaskCanvasDb =
                 |> Async.AwaitTask
                 |> Async.Ignore
         }
+
+    let deleteTag (conn: IDbConnection) (id: Guid) : Async<unit> =
+        async {
+            return!
+                delete {
+                    for t in tagTable do
+                        where (t.id = id)
+                }
+                |> conn.DeleteAsync
+                |> Async.AwaitTask
+                |> Async.Ignore
+        }
