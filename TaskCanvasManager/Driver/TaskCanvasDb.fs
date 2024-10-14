@@ -2,6 +2,7 @@ namespace task_canvas_tag_manager.Driver
 
 open Dapper.FSharp.PostgreSQL
 open System.Data
+open Dapper
 open System
 
 module TaskCanvasDb =
@@ -57,4 +58,17 @@ module TaskCanvasDb =
                 |> conn.DeleteAsync
                 |> Async.AwaitTask
                 |> Async.Ignore
+        }
+
+    let searchTags (conn: IDbConnection) (name: string) : Async<Result<Tag list, exn>> =
+        async {
+            try
+                let query = "SELECT * FROM task_canvas.tag WHERE name LIKE @Name"
+                let parameters = {| Name = sprintf "%%%s%%" name |}
+
+                let! result = conn.QueryAsync<Tag>(query, parameters) |> Async.AwaitTask
+
+                return Ok(result |> List.ofSeq)
+            with ex ->
+                return Error ex
         }
