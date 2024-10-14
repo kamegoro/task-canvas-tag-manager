@@ -72,6 +72,18 @@ let main args =
     )
     |> ignore
 
+    app.MapPut(
+        "/v1/tags/{id}",
+        Func<string, UpdateTag.UpdateTagRequestJson, Task<IResult>>(fun id req ->
+            let deps: タグの更新.Deps =
+                { タグの更新 = TagGateway.タグの更新 (taskCanvasDbDataSource.CreateConnection()) }
+
+            let updateTag = UpdateTag.handler deps { id = id; name = req.name }
+
+            updateTag |> Async.StartAsTask)
+    )
+    |> ignore
+
     app.Run("http://localhost:9090")
 
     0
