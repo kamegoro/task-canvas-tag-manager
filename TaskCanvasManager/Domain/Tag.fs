@@ -1,4 +1,4 @@
-module task_canvas_tag_manager.Domain
+namespace task_canvas_tag_manager.Domain
 
 open System
 
