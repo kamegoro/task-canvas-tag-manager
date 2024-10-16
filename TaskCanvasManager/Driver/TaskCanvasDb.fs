@@ -6,7 +6,12 @@ open Dapper
 open System
 
 module TaskCanvasDb =
-    type Tag = { id: Guid; name: string }
+    type Tag = 
+        { 
+            id: Guid;
+            name: string;
+            is_deleted: bool;
+         }
 
     type TagHistory =
         {
@@ -32,6 +37,19 @@ module TaskCanvasDb =
             return queryResult |> List.ofSeq
         }
 
+    let selectTagById (conn: IDbConnection) (タグID: Guid) : Async<Tag> =
+        async {
+            let! queryResult =
+                select {
+                    for t in tagTable do
+                        where (t.id = タグID)
+                }
+                |> conn.SelectAsync<Tag>
+                |> Async.AwaitTask
+        
+            return queryResult |> Seq.toList |> List.head
+        }
+
     let insertTag (conn: IDbConnection) (タグ: Tag) : Async<unit> =
         async {
             return!
@@ -49,22 +67,10 @@ module TaskCanvasDb =
             return!
                 update {
                     for t in tagTable do
-                        set { id = タグ.id; name = タグ.name }
+                        set { id = タグ.id; name = タグ.name; is_deleted = タグ.is_deleted }
                         where (t.id = タグ.id)
                 }
                 |> conn.UpdateAsync
-                |> Async.AwaitTask
-                |> Async.Ignore
-        }
-
-    let deleteTag (conn: IDbConnection) (id: Guid) : Async<unit> =
-        async {
-            return!
-                delete {
-                    for t in tagTable do
-                        where (t.id = id)
-                }
-                |> conn.DeleteAsync
                 |> Async.AwaitTask
                 |> Async.Ignore
         }
