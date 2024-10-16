@@ -8,7 +8,16 @@ open System
 module TaskCanvasDb =
     type Tag = { id: Guid; name: string }
 
+    type TagHistory =
+        {
+            id: Guid;
+            tag_id: Guid;
+            name: string;
+            created_at: DateTimeOffset;
+        }
+
     let tagTable = table'<Tag> "tag" |> inSchema "task_canvas"
+    let tagHistoryTable = table'<TagHistory> "tag_history" |> inSchema "task_canvas"
 
     let selectTags (conn: IDbConnection) : Async<Tag list> =
         async {
@@ -71,4 +80,16 @@ module TaskCanvasDb =
                 return Ok(result |> List.ofSeq)
             with ex ->
                 return Error ex
+        }
+
+    let insertTagHistory (conn: IDbConnection) (tagHistory: TagHistory) : Async<unit> =
+        async {
+            return!
+                insert {
+                    into tagHistoryTable
+                    value tagHistory
+                }
+                |> conn.InsertAsync
+                |> Async.AwaitTask
+                |> Async.Ignore
         }
