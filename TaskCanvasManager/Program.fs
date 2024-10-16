@@ -1,7 +1,6 @@
 open System
 open Npgsql
 open Microsoft.AspNetCore.Builder
-open Microsoft.Extensions.DependencyInjection
 open Controllers.Systems
 open task_canvas_tag_manager.Handler
 open task_canvas_tag_manager.Config
@@ -92,7 +91,10 @@ let main args =
         "/v1/tags",
         Func<CreateTag.TagRequestJson, Task<IResult>>(fun req ->
             let deps: タグの登録.Deps =
-                { タグの登録 = TagGateway.タグの登録 (taskCanvasDbDataSource.CreateConnection()) }
+                {
+                    タグの登録 = TagGateway.タグの登録 (taskCanvasDbDataSource.CreateConnection())
+                    タグの更新履歴の作成 = TagUpdateHistoryGateway.タグの更新履歴の作成 (taskCanvasDbDataSource.CreateConnection())
+                }
 
             let registerTag = CreateTag.handler deps req.name
 
