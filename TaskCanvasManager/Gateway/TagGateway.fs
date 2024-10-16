@@ -13,7 +13,9 @@ module TagGateway =
                 let! データベースのタグ一覧 = TaskCanvasDb.selectTags conn
 
                 let タグ一覧 =
-                    データベースのタグ一覧 |> List.map (fun タグ -> { タグ番号 = タグ番号 タグ.id; 名前 = タグ名 タグ.name })
+                    データベースのタグ一覧
+                    |> List.filter (fun データベースのタグ -> データベースのタグ.is_deleted = false)
+                    |> List.map (fun タグ -> { タグ番号 = タグ番号 タグ.id; 名前 = タグ名 タグ.name })
 
                 return タグ一覧
             }
@@ -23,7 +25,8 @@ module TagGateway =
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
                     { id = タグ.タグ番号 |> fun (タグ番号 v) -> v
-                      name = タグ.名前 |> fun (タグ名 v) -> v }
+                      name = タグ.名前 |> fun (タグ名 v) -> v
+                      is_deleted = false }
 
                 return! TaskCanvasDb.insertTag conn データベースのタグ
             }
@@ -33,7 +36,8 @@ module TagGateway =
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
                     { id = タグ.タグ番号 |> fun (タグ番号 v) -> v
-                      name = タグ.名前 |> fun (タグ名 v) -> v }
+                      name = タグ.名前 |> fun (タグ名 v) -> v
+                      is_deleted = false }
 
                 return! TaskCanvasDb.updateTag conn データベースのタグ
             }
@@ -43,7 +47,10 @@ module TagGateway =
             async {
                 let データベースのタグ番号: Guid = タグ番号' |> fun (タグ番号 v) -> v
 
-                return! TaskCanvasDb.deleteTag conn データベースのタグ番号
+                let! データベースのタグ =
+                    TaskCanvasDb.selectTagById conn データベースのタグ番号
+
+                return! TaskCanvasDb.updateTag conn { データベースのタグ with is_deleted = true }
             }
 
     let タグの検索 (conn: IDbConnection) : タグの検索 =
