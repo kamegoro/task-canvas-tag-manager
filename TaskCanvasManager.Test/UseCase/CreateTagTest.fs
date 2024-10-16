@@ -15,25 +15,23 @@ module タグの登録のテスト =
         let タグの更新履歴 = タグの更新履歴.タグの更新履歴の作成 タグ
 
         let deps: タグの登録.Deps =
-            {
-                タグの登録 =
-                    fun (タグ: タグ) ->
-                        async {
-                            match タグ with
-                            | { 名前 = タグ名 "タグ1" } -> タグの登録called <- タグの登録called + 1
-                            | _ -> ()
+            { タグの登録 =
+                fun (タグ: タグ) ->
+                    async {
+                        match タグ with
+                        | { 名前 = タグ名 "タグ1" } -> タグの登録called <- タグの登録called + 1
+                        | _ -> ()
 
-                            return ()
-                        }
-                タグの更新履歴の作成 =
-                    fun (タグの更新履歴: タグの更新履歴) ->
-                        async {
-                            if タグの更新履歴 = タグの更新履歴 then
-                                タグの更新履歴の作成called <- タグの更新履歴の作成called + 1
+                        return ()
+                    }
+              タグの更新履歴の作成 =
+                fun (タグの更新履歴: タグの更新履歴) ->
+                    async {
+                        if タグの更新履歴 = タグの更新履歴 then
+                            タグの更新履歴の作成called <- タグの更新履歴の作成called + 1
 
-                            return ()
-                        }
-            }
+                        return ()
+                    } }
 
         タグの登録.実行 deps タグ名 |> Async.RunSynchronously
 

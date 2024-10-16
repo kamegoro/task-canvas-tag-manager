@@ -47,8 +47,7 @@ module TagGateway =
             async {
                 let データベースのタグ番号: Guid = タグ番号' |> fun (タグ番号 v) -> v
 
-                let! データベースのタグ =
-                    TaskCanvasDb.selectTagById conn データベースのタグ番号
+                let! データベースのタグ = TaskCanvasDb.selectTagById conn データベースのタグ番号
 
                 return! TaskCanvasDb.updateTag conn { データベースのタグ with is_deleted = true }
             }
