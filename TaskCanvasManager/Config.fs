@@ -5,7 +5,7 @@ open FsConfig
 type TaskCanvasDbConfig =
     { [<DefaultValue("localhost")>]
       Host: string
-      [<DefaultValue("5432")>]
+      [<DefaultValue("10080")>]
       Port: int
       [<DefaultValue("developer")>]
       Username: string

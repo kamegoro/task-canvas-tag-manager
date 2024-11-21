@@ -18,3 +18,5 @@ module タグの更新履歴 =
           作成日時 = タグの更新履歴の作成日時 (DateTimeOffset.Now.ToUniversalTime())
           タグ名 = タグ.名前
           タグ番号 = タグ.タグ番号 }
+
+    let 登録 (タグの更新履歴の作成: タグの更新履歴 -> Async<unit>) (タグの更新履歴': タグの更新履歴) : Async<unit> = タグの更新履歴の作成 タグの更新履歴'
