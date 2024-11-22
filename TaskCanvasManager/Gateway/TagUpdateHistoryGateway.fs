@@ -2,11 +2,10 @@ namespace task_canvas_tag_manager.Gateway
 
 open task_canvas_tag_manager.Driver
 open task_canvas_tag_manager.Domain
-open task_canvas_tag_manager.Port
 open System.Data
 
 module TagUpdateHistoryGateway =
-    let タグの更新履歴の作成 (conn: IDbConnection) : タグの更新履歴の作成 =
+    let タグの更新履歴の作成 (conn: IDbConnection) : タグの更新履歴.Port.タグの更新履歴の登録 =
         fun (タグの更新履歴: タグの更新履歴) ->
             async {
                 let データベースのタグの更新履歴: TaskCanvasDb.TagHistory =

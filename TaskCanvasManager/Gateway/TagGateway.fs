@@ -2,12 +2,11 @@ namespace task_canvas_tag_manager.Gateway
 
 open task_canvas_tag_manager.Driver
 open task_canvas_tag_manager.Domain
-open task_canvas_tag_manager.Port
 open System.Data
 open System
 
 module TagGateway =
-    let 全てのタグの取得 (conn: IDbConnection) : 全てのタグの取得 =
+    let 全てのタグの取得 (conn: IDbConnection) : タグ.Port.全てのタグの取得 =
         fun () ->
             async {
                 let! データベースのタグ一覧 = TaskCanvasDb.selectTags conn
@@ -20,7 +19,7 @@ module TagGateway =
                 return タグ一覧
             }
 
-    let タグの登録 (conn: IDbConnection) : タグの登録 =
+    let タグの登録 (conn: IDbConnection) : タグ.Port.タグの登録 =
         fun (タグ: タグ) ->
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
@@ -31,7 +30,7 @@ module TagGateway =
                 return! TaskCanvasDb.insertTag conn データベースのタグ
             }
 
-    let タグの更新 (conn: IDbConnection) : タグの更新 =
+    let タグの更新 (conn: IDbConnection) : タグ.Port.タグの更新 =
         fun (タグ: タグ) ->
             async {
                 let データベースのタグ: TaskCanvasDb.Tag =
@@ -42,7 +41,7 @@ module TagGateway =
                 return! TaskCanvasDb.updateTag conn データベースのタグ
             }
 
-    let タグの削除 (conn: IDbConnection) : タグの削除 =
+    let タグの削除 (conn: IDbConnection) : タグ.Port.タグの削除 =
         fun (タグ番号': タグ番号) ->
             async {
                 let データベースのタグ番号: Guid = タグ番号' |> fun (タグ番号 v) -> v
@@ -52,7 +51,7 @@ module TagGateway =
                 return! TaskCanvasDb.updateTag conn { データベースのタグ with is_deleted = true }
             }
 
-    let タグの検索 (conn: IDbConnection) : タグの検索 =
+    let タグの検索 (conn: IDbConnection) : タグ.Port.タグの検索 =
         fun (タグ名': タグ名) ->
             async {
                 let データベースのタグの変換 (タグ: TaskCanvasDb.Tag) =
