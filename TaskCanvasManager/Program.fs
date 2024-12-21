@@ -52,34 +52,24 @@ let main args =
                 try
                     let queryParams = ctx.Request.Query
 
-                    let nameOption =
-                        if queryParams.ContainsKey("name") then
-                            let name = queryParams.["name"].ToString()
-
-                            if not (String.IsNullOrWhiteSpace(name)) then
-                                Some(name)
-                            else
-                                None
-                        else
-                            None
-
                     let getDeps: 全てのタグの取得.Deps =
                         { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection()) }
 
                     let searchDeps: タグの検索.Deps =
                         { タグの検索 = TagGateway.タグの検索 (taskCanvasDbDataSource.CreateConnection()) }
 
-                    let searchTags =
+                    let nameOption: string option =
+                        match queryParams.TryGetValue("name") with
+                        | true, name when not (String.IsNullOrWhiteSpace(name)) -> Some(name.ToString())
+                        | _ -> None
+
+                    let searchTags: Async<IResult> =
                         match nameOption with
                         | Some n when isJapanese n -> SearchTags.handler searchDeps n
                         | Some n -> SearchTags.handler searchDeps n
-                        | None ->
+                        | None -> GetTags.handler getDeps
 
-                            GetTags.handler getDeps
-
-                    let! result = searchTags
-
-                    return result
+                    return! searchTags
                 with ex ->
                     return Results.Problem("An error occurred while processing the request.")
             }
