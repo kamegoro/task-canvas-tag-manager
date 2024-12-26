@@ -28,7 +28,7 @@ let createTaskCanvasDbConnPool () =
     NpgsqlDataSource.Create(builder.ConnectionString)
 
 let isJapanese (input: string) : bool =
-    Regex.IsMatch(input, @"\p{IsHiragana}|\p{IsKatakana}|\p{IsCJKUnifiedIdeographs}")
+    Regex.IsMatch(input, @"[\p{IsHiragana}\p{IsKatakana}\p{IsCJKUnifiedIdeographs}]")
 
 [<EntryPoint>]
 let main args =
@@ -40,10 +40,6 @@ let main args =
     let app = builder.Build()
 
     app.MapGet("/v1/systems/ping", Func<IResult> ping) |> ignore
-
-    let isJapanese (input: string) =
-        let regex = new Regex(@"\p{IsCJKUnifiedIdeographs}")
-        regex.IsMatch(input)
 
     app.MapGet(
         "/v1/tags",
@@ -62,6 +58,8 @@ let main args =
                         match queryParams.TryGetValue("name") with
                         | true, name when not (String.IsNullOrWhiteSpace(name)) -> Some(name.ToString())
                         | _ -> None
+
+                    printfn "Name Option: %A" nameOption
 
                     let searchTags: Async<IResult> =
                         match nameOption with
