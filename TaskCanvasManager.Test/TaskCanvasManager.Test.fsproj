@@ -14,15 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="coverlet.collector" Version="10.0.0" />
     <PackageReference Include="FsUnit" Version="7.1.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
+    <PackageReference Include="NUnit" Version="4.5.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="6.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaskCanvasManager\task-canvas-tag-manager.fsproj" />
+    <ProjectReference Include="../TaskCanvasManager/task-canvas-tag-manager.fsproj" />
   </ItemGroup>
 
 </Project>
