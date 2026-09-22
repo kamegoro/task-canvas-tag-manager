@@ -13,8 +13,10 @@ module SearchTags =
     let toJson (tags: タグ list) : Tags =
         tags
         |> List.map (fun タグ ->
-            { id = タグ.タグ番号 |> fun (タグ番号 v) -> v
-              name = タグ.名前 |> fun (タグ名 v) -> v })
+            {
+                id = タグ.タグ番号 |> fun (タグ番号 v) -> v
+                name = タグ.名前 |> fun (タグ名 v) -> v
+            })
         |> fun tags -> { tags = tags }
 
     let handler (deps: タグの検索.Deps) (name: string) : Async<IResult> =

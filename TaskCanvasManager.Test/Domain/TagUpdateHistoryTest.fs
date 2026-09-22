@@ -10,10 +10,12 @@ module タグの履歴作成のテスト =
         let mutable タグの履歴作成called = 0
 
         let タグの更新履歴' =
-            { 履歴番号 = タグの更新履歴番号 (Guid.NewGuid())
-              作成日時 = タグの更新履歴の作成日時 (DateTimeOffset.Now.ToUniversalTime())
-              タグ名 = タグ名 "タグ1"
-              タグ番号 = タグ番号 (Guid.NewGuid()) }
+            {
+                履歴番号 = タグの更新履歴番号 (Guid.NewGuid())
+                作成日時 = タグの更新履歴の作成日時 (DateTimeOffset.Now.ToUniversalTime())
+                タグ名 = タグ名 "タグ1"
+                タグ番号 = タグ番号 (Guid.NewGuid())
+            }
 
         let deps: タグの更新履歴 -> Async<unit> =
             fun _ ->

@@ -16,8 +16,10 @@ module タグ =
         type タグの検索 = タグ名 -> Async<タグ list>
 
     let タグの作成 (名前: タグ名) : タグ =
-        { タグ番号 = タグ番号 (Guid.NewGuid())
-          名前 = 名前 }
+        {
+            タグ番号 = タグ番号 (Guid.NewGuid())
+            名前 = 名前
+        }
 
     let 登録 (タグの登録: Port.タグの登録) (タグ': タグ) : Async<unit> = タグの登録 タグ'
 
