@@ -5,8 +5,10 @@ open FSharpPlus
 
 module タグの登録 =
     type Deps =
-        { タグの登録: タグ.Port.タグの登録
-          タグの更新履歴の作成: タグの更新履歴.Port.タグの更新履歴の登録 }
+        {
+            タグの登録: タグ.Port.タグの登録
+            タグの更新履歴の作成: タグの更新履歴.Port.タグの更新履歴の登録
+        }
 
     let 実行 (deps: Deps) (名前: タグ名) : Async<unit> =
         let タグ' = タグ.タグの作成 名前

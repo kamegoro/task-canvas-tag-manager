@@ -13,18 +13,20 @@ module タグの登録のテスト =
         let タグ名 = タグ名 "タグ1"
 
         let deps: タグの登録.Deps =
-            { タグの登録 =
-                fun _ ->
-                    async {
-                        タグの登録called <- タグの登録called + 1
-                        return ()
-                    }
-              タグの更新履歴の作成 =
-                fun _ ->
-                    async {
-                        タグの更新履歴の作成called <- タグの更新履歴の作成called + 1
-                        return ()
-                    } }
+            {
+                タグの登録 =
+                    fun _ ->
+                        async {
+                            タグの登録called <- タグの登録called + 1
+                            return ()
+                        }
+                タグの更新履歴の作成 =
+                    fun _ ->
+                        async {
+                            タグの更新履歴の作成called <- タグの更新履歴の作成called + 1
+                            return ()
+                        }
+            }
 
         let actual = タグの登録.実行 deps タグ名 |> Async.RunSynchronously
         let expected = ()

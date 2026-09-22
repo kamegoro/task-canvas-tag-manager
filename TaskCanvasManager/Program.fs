@@ -49,10 +49,14 @@ let main args =
                     let queryParams = ctx.Request.Query
 
                     let getDeps: 全てのタグの取得.Deps =
-                        { 全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection()) }
+                        {
+                            全てのタグの取得 = TagGateway.全てのタグの取得 (taskCanvasDbDataSource.CreateConnection())
+                        }
 
                     let searchDeps: タグの検索.Deps =
-                        { タグの検索 = TagGateway.タグの検索 (taskCanvasDbDataSource.CreateConnection()) }
+                        {
+                            タグの検索 = TagGateway.タグの検索 (taskCanvasDbDataSource.CreateConnection())
+                        }
 
                     let nameOption: string option =
                         match queryParams.TryGetValue("name") with
@@ -79,8 +83,10 @@ let main args =
         "/v1/tags",
         Func<CreateTag.TagRequestJson, Task<IResult>>(fun req ->
             let deps: タグの登録.Deps =
-                { タグの登録 = TagGateway.タグの登録 (taskCanvasDbDataSource.CreateConnection())
-                  タグの更新履歴の作成 = TagUpdateHistoryGateway.タグの更新履歴の作成 (taskCanvasDbDataSource.CreateConnection()) }
+                {
+                    タグの登録 = TagGateway.タグの登録 (taskCanvasDbDataSource.CreateConnection())
+                    タグの更新履歴の作成 = TagUpdateHistoryGateway.タグの更新履歴の作成 (taskCanvasDbDataSource.CreateConnection())
+                }
 
             let registerTag = CreateTag.handler deps req.name
 
@@ -92,7 +98,9 @@ let main args =
         "/v1/tags/{id}",
         Func<string, UpdateTag.UpdateTagRequestJson, Task<IResult>>(fun id req ->
             let deps: タグの更新.Deps =
-                { タグの更新 = TagGateway.タグの更新 (taskCanvasDbDataSource.CreateConnection()) }
+                {
+                    タグの更新 = TagGateway.タグの更新 (taskCanvasDbDataSource.CreateConnection())
+                }
 
             let updateTag = UpdateTag.handler deps { id = id; name = req.name }
 
@@ -104,7 +112,9 @@ let main args =
         "/v1/tags/{id}",
         Func<string, Task<IResult>>(fun id ->
             let deps: タグの削除.Deps =
-                { タグの削除 = TagGateway.タグの削除 (taskCanvasDbDataSource.CreateConnection()) }
+                {
+                    タグの削除 = TagGateway.タグの削除 (taskCanvasDbDataSource.CreateConnection())
+                }
 
             let deleteTag = DeleteTag.handler deps (Guid.Parse(id))
 

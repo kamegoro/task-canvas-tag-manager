@@ -8,15 +8,19 @@ open System
 
 module TaskCanvasDb =
     type Tag =
-        { id: Guid
-          name: string
-          is_deleted: bool }
+        {
+            id: Guid
+            name: string
+            is_deleted: bool
+        }
 
     type TagHistory =
-        { id: Guid
-          tag_id: Guid
-          name: string
-          created_at: DateTimeOffset }
+        {
+            id: Guid
+            tag_id: Guid
+            name: string
+            created_at: DateTimeOffset
+        }
 
     let tagTable = table'<Tag> "tag" |> inSchema "task_canvas"
     let tagHistoryTable = table'<TagHistory> "tag_history" |> inSchema "task_canvas"
@@ -54,9 +58,11 @@ module TaskCanvasDb =
         update {
             for t in tagTable do
                 set
-                    { id = タグ.id
-                      name = タグ.name
-                      is_deleted = タグ.is_deleted }
+                    {
+                        id = タグ.id
+                        name = タグ.name
+                        is_deleted = タグ.is_deleted
+                    }
 
                 where (t.id = タグ.id)
         }

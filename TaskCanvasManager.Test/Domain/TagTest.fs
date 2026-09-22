@@ -11,8 +11,10 @@ module タグのテスト =
             let mutable タグの登録called = 0
 
             let タグ' =
-                { タグ番号 = タグ番号 (Guid.NewGuid())
-                  名前 = タグ名 "タグ1" }
+                {
+                    タグ番号 = タグ番号 (Guid.NewGuid())
+                    名前 = タグ名 "タグ1"
+                }
 
             let deps: タグ.Port.タグの登録 =
                 fun _ ->
@@ -34,8 +36,10 @@ module タグのテスト =
             let mutable タグの更新called = 0
 
             let タグ' =
-                { タグ番号 = タグ番号 (Guid.NewGuid())
-                  名前 = タグ名 "タグ1" }
+                {
+                    タグ番号 = タグ番号 (Guid.NewGuid())
+                    名前 = タグ名 "タグ1"
+                }
 
             let deps: タグ.Port.タグの更新 =
                 fun _ ->
@@ -77,8 +81,10 @@ module タグのテスト =
         [<Test>]
         let タグの全権取得の成功 () =
             let タグ' =
-                { タグ番号 = タグ番号 (Guid.NewGuid())
-                  名前 = タグ名 "タグ1" }
+                {
+                    タグ番号 = タグ番号 (Guid.NewGuid())
+                    名前 = タグ名 "タグ1"
+                }
 
             let mutable タグの全権取得called = 0
 

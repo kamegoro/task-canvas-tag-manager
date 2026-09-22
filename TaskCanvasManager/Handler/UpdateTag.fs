@@ -14,8 +14,10 @@ module UpdateTag =
     let handler (deps: タグの更新.Deps) (タグ: Tag) : Async<IResult> =
         try
             let タグ: タグ =
-                { タグ番号 = タグ番号 (Guid.Parse タグ.id)
-                  名前 = タグ名 タグ.name }
+                {
+                    タグ番号 = タグ番号 (Guid.Parse タグ.id)
+                    名前 = タグ名 タグ.name
+                }
 
             タグの更新.実行 deps タグ |> Async.map (fun _ -> Results.Ok())
         with ex ->
